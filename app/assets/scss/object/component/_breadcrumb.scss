@@ -1,0 +1,34 @@
+/**
+ * Breadcrumb
+ */
+
+.container .contents .breadcrumb {
+  background-color: #efefef;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  font-size: 0.8em;
+}
+
+.container .contents .breadcrumb > li{
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.container .contents .breadcrumb > li.current{
+  font-weight: bold;
+}
+
+.container .contents .breadcrumb > li a{
+  display: inline-block;
+}
+
+.container .contents .breadcrumb > li:before{
+  display: inline;
+  content: ">";
+  padding: 0 5px;
+}
+
+.container .contents .breadcrumb > li:first-child:before{
+  display: none;
+}

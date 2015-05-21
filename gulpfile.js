@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     minifyCSS= require('gulp-minify-css'),
     concat = require('gulp-concat'),
     riot = require('gulp-riot'),
-    bourbon = require('node-bourbon');
+    neat = require('node-neat');
 
 var cssFiles = [
 //        "lib/assets/stylesheets/*.css",
@@ -23,7 +23,7 @@ var cssFiles = [
 
 gulp.task('sass', function () {
   gulp.src('app/assets/scss/*.scss')
-    .pipe(sass({ includePaths: bourbon.includePaths })
+    .pipe(sass({ includePaths: neat.includePaths })
         .on('error', sass.logError))
     .pipe(pleeease({
         autoprefixer: { browsers: ['last 2 versions'] }
@@ -60,7 +60,7 @@ gulp.task('js-minify', function () {
 //------------------------------------------default (watch)
 
 gulp.task('default', function () {
-    gulp.watch('app/assets/scss/*.scss', ['sass']);
+    gulp.watch('app/assets/scss/**/*.scss', ['sass']);
     gulp.watch('app/assets/tags/*.tag', ['riot']);
     gulp.watch('app/assets/stylesheets/*.css', ['css-minify']);
     gulp.watch('app/assets/javascripts/*.js', ['js-minify']);

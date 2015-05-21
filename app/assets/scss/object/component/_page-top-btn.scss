@@ -1,0 +1,19 @@
+/**
+ * Page-Top Button
+ */
+
+.container .page-top-btn {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+}
+
+.container .page-top-btn a {
+  display: block;
+  color: #222;
+  padding: 10px 15px;
+  font-size: 0.8em;
+  background-color: #bbb;
+  border-top-left-radius: 0.4em;
+  border-top-right-radius: 0.4em;
+}

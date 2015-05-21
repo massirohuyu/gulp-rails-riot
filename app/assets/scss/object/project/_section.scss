@@ -1,0 +1,39 @@
+/**
+ * Section
+ */
+
+#index .contents .section{
+  margin-bottom: 30px;
+}
+
+#index .contents .section h2{
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+#index .contents .section h3{
+  font-size: 0.8em;
+  font-weight: normal;
+  line-height: 1.5em;
+}
+
+#index .contents .module > .section{
+  -webkit-box-sizing : border-box ;
+  -moz-box-sizing : border-box ;
+  box-sizing : border-box ;
+  width: 50%;
+  margin-bottom: 20px;
+  float: left;
+  color: #222;
+  border-radius: 0.4em;
+}
+
+@media screen and (max-width:768px){ /*タブレット、スマホ用*/
+
+  #index .contents .module > .section{
+    width: 100%;
+    padding: 15px 15px 0;
+    margin-bottom: 20px;
+  }
+
+}

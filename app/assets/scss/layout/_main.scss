@@ -1,0 +1,30 @@
+/* Main
+   ----------------------------------------------------------------- */
+
+.container > .contents {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 960px;
+  overflow: hidden;
+}
+
+.container > .contents > .content-main {
+  float: left;
+  max-width: 780px;
+  width: 80%;
+}
+
+.container > .contents > .title {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  padding: 5px ;
+  vertical-align: middle;
+}
+
+@media screen and (max-width:768px){ /*タブレット、スマホ用*/
+  .container > .contents > .content-main {
+   float: none;
+    width: 100%;
+    max-width: none;
+  }
+}

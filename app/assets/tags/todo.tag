@@ -16,28 +16,47 @@
     </form>
 
     <script>
-        this.disabled = true
+        
+        var self = this;
+        
+        self.disabled = true
 
-        this.items = opts.items
-        this.checked = false
+        self.items = opts.items
+        self.checked = false
+        
+        
+        Scatter.get('/static_pages/test/', '', function(xhr){
+            var tasks = JSON.parse(xhr.response);
+            self.addAjax(tasks);
+        });
         
 
         edit(e) {
-            this.text = e.target.value
+            self.text = e.target.value
+        }
+        
+        addAjax(tasks) {
+            tasks.forEach(function(task){
+                self.items.push({
+                    title: task.title,
+                    done: task.done
+                });
+            });
+            self.update();
         }
 
         add(e) {
-            if (this.text) {
-                this.items.push({
-                    title: this.text,
-                    done: this.checked
+            if (self.text) {
+                self.items.push({
+                    title: self.text,
+                    done: self.checked
                 })
-                this.text = this.input.value = ''
+                self.text = self.input.value = ''
             }
         }
         
         check(e) {
-            this.checked = !this.checked
+            self.checked = !self.checked
             return true
         }
 
@@ -46,6 +65,16 @@
             item.done = !item.done
             return true
         }
+        
+        riot.observable(this);
+        
+        self.on('open', function() {
+            self.items.push({
+                title: 'open',
+                done: true
+            });
+        });
+
     </script>
 
 </todo>

@@ -1,6 +1,6 @@
 <todo>
 
-    <h3>{ opts.title }</h3>
+    <h3>{ title }</h3>
 
     <ul>
         <li each={ items } class={ hidden: hidden }>
@@ -21,14 +21,17 @@
         
         self.disabled = true
 
-        self.items = opts.items
+        self.title = opts.title || 'TODO LISTS'
+        self.items = opts.items || []
         self.checked = false
         
         
-        Scatter.get('/static_pages/test/', '', function(xhr){
-            var tasks = JSON.parse(xhr.response);
-            self.addAjax(tasks);
-        });
+        if( opts.remote ){
+          ajax.get(opts.remote, function(res){
+              var tasks = JSON.parse(res);
+              self.addAjax(tasks);
+          });
+        }
         
 
         edit(e) {
@@ -66,14 +69,16 @@
             return true
         }
         
-        riot.observable(this);
-        
-        self.on('open', function() {
-            self.items.push({
-                title: 'open',
-                done: true
-            });
-        });
+//        riot.event.on('open', function(res) {
+//            console.log(self.root.dataset.aaa);
+//            if(!self.root.dataset.aaa) {
+//                self.items.push({
+//                    title: res,
+//                    done: true
+//                });
+//                self.update();
+//            }
+//        });
 
     </script>
 

@@ -33,6 +33,7 @@
 
         toggleTab(e) {
             this.activeTab = e.item.tab.ref
+            riot.event.trigger('open', 'opened');
             return true
         }
     </script>

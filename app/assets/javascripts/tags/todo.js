@@ -1,17 +1,20 @@
-riot.tag('todo', '<h3>{ opts.title }</h3> <ul> <li each="{ items }" class="{ hidden: hidden }"> <label class="{ completed: done }"> <input type="checkbox" __checked="{ done }" onclick="{ parent.toggle }"> { title } </label> </li> </ul> <form onsubmit="{ add }"> <input type="checkbox" __checked="{ checked }" onclick="{ check }"><input name="input" onkeyup="{ edit }"> <button __disabled="{ !text }">Add #{ items.length + 1 }</button> </form>', function(opts) {
+riot.tag('todo', '<h3>{ title }</h3> <ul> <li each="{ items }" class="{ hidden: hidden }"> <label class="{ completed: done }"> <input type="checkbox" __checked="{ done }" onclick="{ parent.toggle }"> { title } </label> </li> </ul> <form onsubmit="{ add }"> <input type="checkbox" __checked="{ checked }" onclick="{ check }"><input name="input" onkeyup="{ edit }"> <button __disabled="{ !text }">Add #{ items.length + 1 }</button> </form>', function(opts) {
 
         var self = this;
 
         self.disabled = true
 
-        self.items = opts.items
+        self.title = opts.title || 'TODO LISTS'
+        self.items = opts.items || []
         self.checked = false
 
 
-        Scatter.get('/static_pages/test/', '', function(xhr){
-            var tasks = JSON.parse(xhr.response);
-            self.addAjax(tasks);
-        });
+        if( opts.remote ){
+          ajax.get(opts.remote, function(res){
+              var tasks = JSON.parse(res);
+              self.addAjax(tasks);
+          });
+        }
 
 
         this.edit = function(e) {
@@ -48,15 +51,6 @@ riot.tag('todo', '<h3>{ opts.title }</h3> <ul> <li each="{ items }" class="{ hid
             item.done = !item.done
             return true
         }.bind(this);
-
-        riot.observable(this);
-
-        self.on('open', function() {
-            self.items.push({
-                title: 'open',
-                done: true
-            });
-        });
 
 
 });

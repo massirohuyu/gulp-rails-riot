@@ -25,6 +25,7 @@ riot.tag('tabs', '<h2>Tabs</h2> <ul> <li each="{ tab, i in tabs }" class="tabIte
 
         this.toggleTab = function(e) {
             this.activeTab = e.item.tab.ref
+            riot.event.trigger('open', 'opened');
             return true
         }.bind(this);
 

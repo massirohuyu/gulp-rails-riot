@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-  <title>Newapp</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
+
+    <meta charset="UTF-8">
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <![endif]-->
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=980, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="html5 template">
+    <meta name="keywords" content="html5,template">
+    <meta name="author" content="">
+
+    <title><%= yield(:title) %></title>
+
+    <link rel="stylesheet" href="/stylesheets/application.css" media='screen'>
+    <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script>html5.addElements('test tabs todo')</script>
+    <![endif]-->
+    <script src="/javascripts/application.js"></script>
+
+    <%= render 'layouts/favicon' %>
+
+    <%= csrf_meta_tags %>
 </head>
-<body>
 
-<%= yield %>
+<body id="<%= yield(:body_id) %>">
+    <div class="container">
 
+    <%= render 'layouts/header' %>
+
+    <%= yield %>
+
+    <%= render 'layouts/footer' %>
+    <%= render 'layouts/page_top' %>
+
+    </div>
+    <!--/container-->
 </body>
 </html>

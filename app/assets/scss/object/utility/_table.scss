@@ -1,0 +1,25 @@
+/**
+ * Table
+ */
+
+.table {
+    display: table;
+}
+.thead {
+    display: table-header-group;
+}
+.tbody {
+    display: table-row-group;
+}
+.tfoot {
+    display: table-footer-group;
+}
+.tr {
+    display: table-row;
+}
+.th {
+    display: table-cell;
+}
+.td {
+    display: table-cell;
+}

@@ -6,7 +6,8 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     riot = require('gulp-riot'),
     neat = require('node-neat'),
-    merge = require('merge-stream')
+    merge = require('merge-stream'),
+    plumber = require('gulp-plumber');
 
 var cssFiles = [
 //        "lib/assets/stylesheets/*.css",
@@ -15,13 +16,14 @@ var cssFiles = [
     ];
 
 var jsFilesMin = [
-        "vendor/assets/javascripts/**/*min.js",
+//        "vendor/assets/javascripts/**/*min.js",
         "vendor/bower_components/underscore/underscore-min.js"
     ],
     jsFiles = [
 //        "lib/assets/javascripts/*.js",
-        "vendor/assets/riot/riot.js",
-        "vendor/bower_components/riot/riot.js",
+        "vendor/assets/javascripts/**/*.js",
+//        "vendor/bower_components/riot/riot+compiler.min.js",
+        "vendor/bower_components/riot/riot.min.js",
         "app/assets/javascripts/tags/*.js",
         "app/assets/javascripts/*.js"
     ];
@@ -30,6 +32,7 @@ var jsFilesMin = [
 
 gulp.task('sass', function () {
     gulp.src('app/assets/scss/*.scss')
+        .pipe(plumber())
         .pipe(sass({ includePaths: neat.includePaths })
             .on('error', sass.logError))
         .pipe(pleeease({
@@ -42,6 +45,7 @@ gulp.task('sass', function () {
 
 gulp.task('riot', function () {
     gulp.src('app/assets/tags/*.tag')
+        .pipe(plumber())
         .pipe(riot())
         .pipe(gulp.dest('app/assets/javascripts/tags/'));
 });
@@ -50,6 +54,7 @@ gulp.task('riot', function () {
 
 gulp.task('css-minify', function () {
     gulp.src(cssFiles)
+        .pipe(plumber())
         .pipe(concat('application.css'))
         .pipe( minifyCSS({ 'keepBreaks' : false }) )
         .pipe(gulp.dest('public/stylesheets/'));
@@ -61,7 +66,8 @@ gulp.task('js-minify', function () {
     merge(
         gulp.src(jsFilesMin),
         gulp.src(jsFiles)
-            .pipe( uglify({preserveComments: 'some'}) )
+            .pipe(plumber())
+//            .pipe( uglify({preserveComments: 'some'}) )
     )
     .pipe(concat('application.js'))
     .pipe(gulp.dest('public/javascripts/'));

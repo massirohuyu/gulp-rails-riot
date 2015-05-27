@@ -1,5 +1,13 @@
 Newapp::Application.routes.draw do
-  get "static_pages/test"
+  root 'static_pages#index'
+  match '/records'            => 'records#index',     :via => :get
+  match '/records/update/:id' => 'records#update',    :via => :post
+  match '/sections'           => 'sections#index',    :via => :get
+  match '/subsections'        => 'subsections#index', :via => :get
+
+  #  get "static_pages/test"
+  #  get "tags/test"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

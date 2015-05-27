@@ -16,7 +16,9 @@
 
     <link rel="stylesheet" href="/stylesheets/application.css" media='screen'>
     <!--[if lt IE 9]>
-        <script src="/javascripts/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script>html5.addElements('test tabs todo')</script>
     <![endif]-->
     <script src="/javascripts/application.js"></script>
 
@@ -34,7 +36,6 @@
 </head>
 
 <body id="index">
-
     <div class="container">
 
         <header class="header clearfix" id="page-top">
@@ -61,20 +62,38 @@
                         Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz.
                     </p>
                 </section>
+                
+                <script type="riot/tag">
+                    <moti>
+                        <section class="section">
+                            <h2 class="heading">
+                                Heading2
+                            </h2>
+                            <p>
+                                Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz. Abcdefg hijklmn opqrstu vwxyz.
+                            </p>
+                        </section>
+                    </moti>
+                </script>
+                <moti></moti>
+                
+                <script src="/tags/test" type="riot/tag"></script>
+                <balance></balance>
 
             </div>
             <!--/content-main-->
 
             <div class="content-side">
                 <section class="section">
-                    <todo></todo>
+                    <todo id="todoA" data-aaa="true"></todo>
+                    <todo id="todoB"></todo>
                     <tabs></tabs>
                 </section>
             </div>
-            <!--/contents-->
+            <!--/content-side-->
 
         </div>
-        <!--/content-side-->
+        <!--/contents-->
 
         <footer class="footer">
             <p class="copyright">(c) HTML5 TEMPLATE EX</p>
@@ -86,29 +105,6 @@
 
     </div>
     <!--/container-->
-
-    <script>
-        riot.mount('todo', {
-            title: 'I want to behave!',
-            items: [
-                {
-                    title: 'Avoid excessive coffeine',
-                    done: true
-                },
-                {
-                    title: 'Hidden item',
-                    hidden: true
-                },
-                {
-                    title: 'Be less provocative'
-                },
-                {
-                    title: 'Be nice to people'
-                }
-              ]
-        })
-        riot.mount('tabs')
-    </script>
 
 </body>
 

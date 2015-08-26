@@ -1,6 +1,6 @@
 # gulp-rails-riot
 
-## 使用予定ツール・プラグインメモ（エンドもフロントもごちゃまぜ）
+## 使用予定ツール・プラグインメモ（バックもフロントもごちゃまぜ）
 
 * qulp(sass,concat,minify)
 * ruby
@@ -11,7 +11,7 @@
 * neat
 * postgresql
 * FLOCSS
-* underscore.js
+* underscore.js または lodash
 
 ### どこまでjsやcssを結合させるか…
 

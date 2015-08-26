@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="tbody" each={ record_groups }>
-            <balance-table-child class="tr" date={ date } each={ record, i in records }></balance-table-child>
+            <balance-table-child each={ record, i in records } class="tr { changed: record.id === parent.changedId }"></balance-table-child>
         </div>
         <div class="tfoot">
             <div class="tr">
@@ -30,6 +30,8 @@
         this.records = riot.collections.records;
         this.sections = riot.collections.sections;
         this.subsections = riot.collections.subsections;
+      
+        this.changedId = false;
       
         this.titles = ['date', 'section', 'subsection', 'amount'];
         this.record_groups = [];
@@ -81,7 +83,6 @@
         });
       
         self.on('update', function() {
-          
             if(self.records.isReady() && self.sections.isReady() && self.subsections.isReady()){
                 self.record_groups = _.map(self.records.models, function(record_group){
                     var record_group = _.clone(record_group);
@@ -89,6 +90,7 @@
                         var section = self.sections.models[record.section],
                             subsection = self.subsections.models[record.subsection];
                         return {
+                            date : record.date,
                             id : record.id,
                             section :    { id : record.section, surface: section.title },
                             subsection : { id : record.subsection, surface: subsection.title },

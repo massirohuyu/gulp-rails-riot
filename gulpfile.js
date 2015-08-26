@@ -18,6 +18,7 @@ var cssFiles = [
 var jsFilesMin = [
 //        "vendor/assets/javascripts/**/*min.js",
         "vendor/bower_components/underscore/underscore-min.js"
+//        "vendor/bower_components/lodash/lodash.min.js"
     ],
     jsFiles = [
 //        "lib/assets/javascripts/*.js",
@@ -71,6 +72,12 @@ gulp.task('js-minify', function () {
     )
     .pipe(concat('application.js'))
     .pipe(gulp.dest('public/javascripts/'));
+});
+
+//------------------------------------------all
+
+gulp.task('all', function () {
+    gulp.start(['sass', 'riot', 'css-minify', 'js-minify']);
 });
 
 //------------------------------------------default (watch)

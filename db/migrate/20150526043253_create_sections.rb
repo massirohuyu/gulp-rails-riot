@@ -3,7 +3,7 @@ class CreateSections < ActiveRecord::Migration
     create_table :sections do |t|
       t.string :title
       t.boolean :is_income
-      t.text :children
+      t.text :subsections
       t.text :image
 
       t.timestamps

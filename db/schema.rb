@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526043253) do
+ActiveRecord::Schema.define(version: 20150826073020) do
 
   create_table "records", force: true do |t|
     t.integer  "section"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20150526043253) do
   create_table "sections", force: true do |t|
     t.string   "title"
     t.boolean  "is_income"
-    t.text     "children"
+    t.text     "subsections"
     t.text     "image"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -35,7 +35,14 @@ ActiveRecord::Schema.define(version: 20150526043253) do
 
   create_table "subsections", force: true do |t|
     t.string   "title"
-    t.integer  "parent"
+    t.integer  "section"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.text     "using_books"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

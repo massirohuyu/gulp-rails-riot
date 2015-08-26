@@ -1,15 +1,18 @@
 (function(){
 
-    //riot拡張
+    //------ riot拡張 ------------
+    //riot.event 全riot独自タグ内でイベント感知できるように
     riot.event  = riot.observable();
-
+    
+    //riot.getData タグからdata-○○属性を取得。
     riot.getData = function(dom, name) {
         if(!document.createElement('div').dataset) {
             return dom.getAttribute('data-' + name);
         }
         return dom.dataset[name];
     }
-
+    
+    //riot.createCollection リモートからデータをAjaxで取得して、モデル群を保持。
     riot.createCollection = function(opts){
         var collection = riot.observable(), opts = opts || {};
 
@@ -42,11 +45,12 @@
 
         return collection;
     }
-
+    //保持するモデル群。
     riot.collections  = {
       records : riot.createCollection({remote: '/records'}),
       sections : riot.createCollection({remote: '/sections'}),
-      subsections : riot.createCollection({remote: '/subsections'})
+      subsections : riot.createCollection({remote: '/subsections'}),
+      users : riot.createCollection({remote: '/users'})
     }
 
     document.ready(function(){

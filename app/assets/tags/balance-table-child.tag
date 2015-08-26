@@ -1,43 +1,75 @@
 <balance-table-child>
     
     <div class="th">
-        <p class="{ hidden: this.editMode }" onclick={ editModeStart }>{ opts.date }</p>
-        <form onsubmit={ patch } if={ this.editMode }>
-            <input type="date" class="edit-input {edit-mode: this.editMode}" name="date" value={ opts.date } onblur={ editModeEnd }>
-        </form>
+        <view-edit-box surface={ this.record.date } >
+            <input name="date" type="date" class="edit-input {edit-mode: this.editMode}" value={ this.record.date } onblur={ editModeEnd }>
+        </view-edit-box>
     </div>
-    <div each={ name, value in this.record } class="td { 'record-' + name }" if={ name !== 'id'}>
-        <p class={hidden: this.editMode}  onclick={ parent.editModeStart }>{ value.surface }</p>
-        <form onsubmit={ parent.patch } if={ this.editMode }>
-            <input type="number" class="edit-input {edit-mode: this.editMode}" name={ name } if={ name === 'amount'} value={ value.value } onblur={ parent.editModeEnd }>
-            <input type="number" class="edit-input {edit-mode: this.editMode}" name={ name } if={ name === 'section'} value={ value.id } onblur={ parent.editModeEnd }>
-            <input type="number" class="edit-input {edit-mode: this.editMode}" name={ name } if={ name === 'subsection'} value={ value.id } onblur={ parent.editModeEnd }>
-        </form>
+    
+    <div class="td record-section">
+        <view-edit-box surface={ this.record.section.surface } >
+            <select name="section" class="edit-input {edit-mode: this.editMode}" onblur={ editModeEnd }>
+                <option each={ parent.sections.models } value={ this.id } selected={ this.id === this.record.section.id }>
+                    { this.title }
+                </option>
+            </select>
+        </view-edit-box>
+    </div>
+    <div class="td record-subsection">
+        <view-edit-box surface={ this.record.subsection.surface } >
+            <select name="subsection" class="edit-input {edit-mode: this.editMode}" onblur={ editModeEnd }>
+                <option each={ parent.subsections.models } value={ this.id } selected={ this.id === this.record.subsection.id }>
+                    { this.title }
+                </option>
+            </select>
+        </view-edit-box>
+    </div>
+    <div class="td record-amount">
+        <view-edit-box surface={ this.record.amount.surface } >
+            <input name="amount" type="number" class="edit-input {edit-mode: this.editMode}" value={ this.record.amount.value } onblur={ editModeEnd }>
+        </view-edit-box>
     </div>
     
     <script>
       
-        this.editMode = false;
         
-        editModeStart(e) {
-            if(e.item) e.item.editMode = true;
-            else this.editMode = true;
-            this.one('updated', function(){
-                this.root.getElementsByClassName('edit-mode')[0].focus();
-            });
+        // properties -------------------------------
+      
+        
+        // methods ----------------------------------
+      
+        keypress(e) {
+            if( e.keyCode === 13 ) {
+              e.target.blur();
+              this.trigger('patch', e.target.parentElement);
+            }
+            else return true;
         }
       
-        editModeEnd(e) {
-            if(e.item) e.item.editMode = false;
-            else this.editMode = false;
+        submit(e) {
+            this.parent.changedId = this.record.id;
+            this.trigger('patch', e.target)
+        }
+        
+        puts(obj){
+          console.log(obj);
         }
       
-        patch(e) {
-            var param = ajax.serialize(e.target);
-            this.parent.records.trigger('patch', this.record.id, param)
-        }
+        // events ------------------------------------
       
         var self = this;
+      
+        self.on('patch', function(form){
+            var param = ajax.serialize(form);
+            console.log(self.parent.parent);
+            self.parent.parent.changedId = self.record.id;
+            riot.collections.records.trigger('patch', self.record.id, param);
+            
+        });
+        
+        self.on('update', function(){
+            
+        });
       
         self.on('updated', function(){
             

@@ -1,4 +1,4 @@
-riot.tag('tabs', '<h2>Tabs</h2> <ul> <li each="{ tab, i in tabs }" class="tabItem { is-active: parent.isActiveTab(tab.ref) }" onclick="{ parent.toggleTab }">{tab.title}</li> </ul> <div class="tabContent"> <div each="{ tab, i in tabs }" class="tabContent__item { hidden: !parent.isActiveTab(tab.ref) }">{tab.content}</div> </div>', function(opts) {
+riot.tag2('tabs', '<h2>Tabs</h2> <ul> <li each="{tab, i in tabs}" class="tabItem {is-active: parent.isActiveTab(tab.ref)}" onclick="{parent.toggleTab}">{tab.title}</li> </ul> <div class="tabContent"> <div each="{tab, i in tabs}" class="tabContent__item {hidden: !parent.isActiveTab(tab.ref)}">{tab.content}</div> </div>', '', '', function(opts) {
         this.tabs = [
             {
                 title: 'Tab 1',
@@ -21,12 +21,11 @@ riot.tag('tabs', '<h2>Tabs</h2> <ul> <li each="{ tab, i in tabs }" class="tabIte
 
         this.isActiveTab = function(tab) {
             return this.activeTab === tab
-        }.bind(this);
+        }.bind(this)
 
         this.toggleTab = function(e) {
             this.activeTab = e.item.tab.ref
             riot.event.trigger('open', 'opened');
             return true
-        }.bind(this);
-    
+        }.bind(this)
 });

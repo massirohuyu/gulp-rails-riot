@@ -17,58 +17,56 @@ ajax.post=function(url,func,args){ajax.send(url,func,'POST',args)};
 ajax.update=function(url,elm){var e=$(elm);var f=function(r){e.innerHTML=r};ajax.get(url,f)};
 ajax.submit=function(url,elm,frm){var e=$(elm);var f=function(r){e.innerHTML=r};ajax.post(url,f,ajax.serialize(frm))};
 
-/* Riot v2.2.4, @license MIT, (c) 2015 Muut Inc. + contributors */
-(function(e,t){"use strict";var n={version:"v2.2.4",settings:{}},i=0,r="riot-",o=r+"tag",u="string",f="object",a="undefined",s="function",c=/^(?:opt(ion|group)|tbody|col|t[rhd])$/,l=["_item","_id","update","root","mount","unmount","mixin","isMounted","isLoop","tags","parent","opts","trigger","on","off","one"],p=(e&&e.document||{}).documentMode|0,d=Array.isArray;n.observable=function(e){e=e||{};var t={},n=0;e.on=function(i,r){if(M(r)){if(typeof r.id===a)r._id=n++;i.replace(/\S+/g,function(e,n){(t[e]=t[e]||[]).push(r);r.typed=n>0})}return e};e.off=function(n,i){if(n=="*")t={};else{n.replace(/\S+/g,function(e){if(i){var n=t[e];for(var r=0,o;o=n&&n[r];++r){if(o._id==i._id)n.splice(r--,1)}}else{t[e]=[]}})}return e};e.one=function(t,n){function i(){e.off(t,i);n.apply(e,arguments)}return e.on(t,i)};e.trigger=function(n){var i=[].slice.call(arguments,1),r=t[n]||[];for(var o=0,u;u=r[o];++o){if(!u.busy){u.busy=1;u.apply(e,u.typed?[n].concat(i):i);if(r[o]!==u){o--}u.busy=0}}if(t.all&&n!="all"){e.trigger.apply(e,["all",n].concat(i))}return e};return e};n.mixin=function(){var e={};return function(t,n){if(!n)return e[t];e[t]=n}}();(function(e,t,n){if(!n)return;var i=n.location,r=e.observable(),o=false,u;function f(){return i.href.split("#")[1]||""}function a(e){return e.split("/")}function s(e){if(e.type)e=f();if(e!=u){r.trigger.apply(null,["H"].concat(a(e)));u=e}}var c=e.route=function(e){if(e[0]){i.hash=e;s(e)}else{r.on("H",e)}};c.exec=function(e){e.apply(null,a(f()))};c.parser=function(e){a=e};c.stop=function(){if(o){if(n.removeEventListener)n.removeEventListener(t,s,false);else n.detachEvent("on"+t,s);r.off("*");o=false}};c.start=function(){if(!o){if(n.addEventListener)n.addEventListener(t,s,false);else n.attachEvent("on"+t,s);o=true}};c.start()})(n,"hashchange",e);var g=function(e){var t,i,r,o=/[{}]/g;return function(u){var f=n.settings.brackets||e;if(t!==f){t=f;r=f.split(" ");i=r.map(function(e){return e.replace(/(?=.)/g,"\\")})}return u instanceof RegExp?f===e?u:new RegExp(u.source.replace(o,function(e){return i[~~(e==="}")]}),u.global?"g":""):r[u]}}("{ }");var m=function(){var t={},n='"in d?d:'+(e?"window).":"global)."),i=/(['"\/])(?:[^\\]*?|\\.|.)*?\1|\.\w*|\w*:|\b(?:(?:new|typeof|in|instanceof) |(?:this|true|false|null|undefined)\b|function\s*\()|([A-Za-z_$]\w*)/g;return function(e,n){return e&&(t[e]||(t[e]=r(e)))(n)};function r(e,t){if(e.indexOf(g(0))<0){e=e.replace(/\n|\r\n?/g,"\n");return function(){return e}}e=e.replace(g(/\\{/g),"￰").replace(g(/\\}/g),"￱");t=f(e,a(e,g(/{/),g(/}/)));e=t.length===2&&!t[0]?o(t[1]):"["+t.map(function(e,t){return t%2?o(e,true):'"'+e.replace(/\n|\r\n?/g,"\\n").replace(/"/g,'\\"')+'"'}).join(",")+'].join("")';return new Function("d","return "+e.replace(/\uFFF0/g,g(0)).replace(/\uFFF1/g,g(1))+";")}function o(e,t){e=e.replace(/\n|\r\n?/g," ").replace(g(/^[{ ]+|[ }]+$|\/\*.+?\*\//g),"");return/^\s*[\w- "']+ *:/.test(e)?"["+a(e,/["' ]*[\w- ]+["' ]*:/,/,(?=["' ]*[\w- ]+["' ]*:)|}|$/).map(function(e){return e.replace(/^[ "']*(.+?)[ "']*: *(.+?),? *$/,function(e,t,n){return n.replace(/[^&|=!><]+/g,u)+'?"'+t+'":"",'})}).join("")+'].join(" ").trim()':u(e,t)}function u(e,t){e=e.trim();return!e?"":"(function(v){try{v="+e.replace(i,function(e,t,i){return i?'(("'+i+n+i+")":e})+"}catch(e){}return "+(t===true?'!v&&v!==0?"":v':"v")+"}).call(d)"}function f(e,t){var n=[];t.map(function(t,i){i=e.indexOf(t);n.push(e.slice(0,i),t);e=e.slice(i+t.length)});if(e)n.push(e);return n}function a(e,t,n){var i,r=0,o=[],u=new RegExp("("+t.source+")|("+n.source+")","g");e.replace(u,function(t,n,u,f){if(!r&&n)i=f;r+=n?1:-1;if(!r&&u!=null)o.push(e.slice(i,f+u.length))});return o}}();var v=function(e){var t={tr:"tbody",th:"tr",td:"tr",tbody:"table",col:"colgroup"},n="div";e=e&&e<10;function i(i){var o=i&&i.match(/^\s*<([-\w]+)/),u=o&&o[1].toLowerCase(),f=t[u]||n,a=R(f);a.stub=true;if(e&&u&&(o=u.match(c)))r(a,i,u,!!o[1]);else a.innerHTML=i;return a}function r(e,t,i,r){var o=R(n),u=r?"select>":"table>",f;o.innerHTML="<"+u+t+"</"+u;f=o.getElementsByTagName(i)[0];if(f)e.appendChild(f)}return i}(p);function h(e){var t=g(0),n=e.trim().slice(t.length).match(/^\s*(\S+?)\s*(?:,\s*(\S+))?\s+in\s+(.+)$/);return n?{key:n[1],pos:n[2],val:t+n[3]}:{val:e}}function y(e,t,n){var i={};i[e.key]=t;if(e.pos)i[e.pos]=n;return i}function b(e,t,n){A(e,"each");var i=S(e),r=e.outerHTML,o=!!U[i],u=U[i]||{tmpl:r},f=e.parentNode,a=document.createComment("riot placeholder"),s=[],l=O(e),p;f.insertBefore(a,e);n=h(n);t.one("premount",function(){if(f.stub)f=t.root;e.parentNode.removeChild(e)}).on("update",function(){var r=m(n.val,t);if(!d(r)){p=r?JSON.stringify(r):"";r=!r?[]:Object.keys(r).map(function(e){return y(n,e,r[e])})}var g=document.createDocumentFragment(),v=s.length,h=r.length;while(v>h){s[--v].unmount();s.splice(v,1)}for(v=0;v<h;++v){var b=!p&&!!n.key?y(n,r[v],v):r[v];if(!s[v]){(s[v]=new _(u,{parent:t,isLoop:true,hasImpl:o,root:c.test(i)?f:e.cloneNode(),item:b},e.innerHTML)).mount();g.appendChild(s[v].root)}else s[v].update(b);s[v]._item=b}f.insertBefore(g,a);if(l)t.tags[i]=s}).one("updated",function(){var e=Object.keys(t);F(f,function(n){if(n.nodeType==1&&!n.isLoop&&!n._looped){n._visited=false;n._looped=true;z(n,t,e)}})})}function w(e,t,n){F(e,function(e){if(e.nodeType==1){e.isLoop=e.isLoop||(e.parentNode&&e.parentNode.isLoop||e.getAttribute("each"))?1:0;var i=O(e);if(i&&!e.isLoop){n.push(E(i,e,t))}if(!e.isLoop)z(e,t,[])}})}function L(e,t,n){function i(e,t,i){if(t.indexOf(g(0))>=0){var r={dom:e,expr:t};n.push(k(r,i))}}F(e,function(e){var n=e.nodeType;if(n==3&&e.parentNode.tagName!="STYLE")i(e,e.nodeValue);if(n!=1)return;var r=e.getAttribute("each");if(r){b(e,t,r);return false}C(e.attributes,function(t){var n=t.name,r=n.split("__")[1];i(e,t.value,{attr:r||n,bool:r});if(r){A(e,n);return false}});if(O(e))return false})}function _(e,r,o){var s=n.observable(this),c=q(r.opts)||{},p=v(e.tmpl),h=r.parent,y=r.isLoop,b=r.hasImpl,_=j(r.item),N=[],x=[],A=r.root,O=e.fn,E=A.tagName.toLowerCase(),S={},F=[];if(O&&A._tag){A._tag.unmount(true)}this.isMounted=false;A.isLoop=y;A._tag=this;this._id=i++;k(this,{parent:h,root:A,opts:c,tags:{}},_);C(A.attributes,function(e){var t=e.value;if(g(/{.*}/).test(t))S[e.name]=t});if(p.innerHTML&&!/^(select|optgroup|table|tbody|tr|col(?:group)?)$/.test(E))p.innerHTML=D(p.innerHTML,o);function R(){var e=b&&y?s:h||s;C(A.attributes,function(t){c[t.name]=m(t.value,e)});C(Object.keys(S),function(t){c[t]=m(S[t],e)})}function I(e){for(var t in _){if(typeof s[t]!==a)s[t]=e[t]}}function V(){if(!s.parent||!y)return;C(Object.keys(s.parent),function(e){var t=!~l.indexOf(e)&&~F.indexOf(e);if(typeof s[e]===a||t){if(!t)F.push(e);s[e]=s.parent[e]}})}this.update=function(e){e=j(e);V();if(e&&typeof _===f){I(e);_=e}k(s,e);R();s.trigger("update",e);T(N,s);s.trigger("updated")};this.mixin=function(){C(arguments,function(e){e=typeof e===u?n.mixin(e):e;C(Object.keys(e),function(t){if(t!="init")s[t]=M(e[t])?e[t].bind(s):e[t]});if(e.init)e.init.bind(s)()})};this.mount=function(){R();if(O)O.call(s,c);L(p,s,N);z(true);if(e.attrs||b){$(e.attrs,function(e,t){A.setAttribute(e,t)});L(s.root,s,N)}if(!s.parent||y)s.update(_);s.trigger("premount");if(y&&!b){s.root=A=p.firstChild}else{while(p.firstChild)A.appendChild(p.firstChild);if(A.stub)s.root=A=h.root}if(!s.parent||s.parent.isMounted){s.isMounted=true;s.trigger("mount")}else s.parent.one("mount",function(){if(!B(s.root)){s.parent.isMounted=s.isMounted=true;s.trigger("mount")}})};this.unmount=function(e){var n=A,i=n.parentNode,r;if(i){if(h){r=H(h);if(d(r.tags[E]))C(r.tags[E],function(e,t){if(e._id==s._id)r.tags[E].splice(t,1)});else r.tags[E]=t}else while(n.firstChild)n.removeChild(n.firstChild);if(!e)i.removeChild(n);else i.removeAttribute("riot-tag")}s.trigger("unmount");z();s.off("*");A._tag=null};function z(e){C(x,function(t){t[e?"mount":"unmount"]()});if(h){var t=e?"on":"off";if(y)h[t]("unmount",s.unmount);else h[t]("update",s.update)[t]("unmount",s.unmount)}}w(p,this,x)}function N(t,n,i,r){i[t]=function(t){var o=r._item,u=r.parent,f;if(!o)while(u&&!o){o=u._item;u=u.parent}t=t||e.event;try{t.currentTarget=i;if(!t.target)t.target=t.srcElement;if(!t.which)t.which=t.charCode||t.keyCode}catch(a){}t.item=o;if(n.call(r,t)!==true&&!/radio|check/.test(i.type)){if(t.preventDefault)t.preventDefault();t.returnValue=false}if(!t.preventUpdate){f=o?H(u):r;f.update()}}}function x(e,t,n){if(e){e.insertBefore(n,t);e.removeChild(t)}}function T(e,t){C(e,function(e,n){var i=e.dom,u=e.attr,a=m(e.expr,t),s=e.dom.parentNode;if(e.bool)a=a?u:false;else if(a==null)a="";if(s&&s.tagName=="TEXTAREA")a=(""+a).replace(/riot-/g,"");if(e.value===a)return;e.value=a;if(!u){i.nodeValue=""+a;return}A(i,u);if(M(a)){N(u,a,i,t)}else if(u=="if"){var c=e.stub,l=function(){x(c.parentNode,c,i)},p=function(){x(i.parentNode,i,c)};if(a){if(c){l();i.inStub=false;if(!B(i)){F(i,function(e){if(e._tag&&!e._tag.isMounted)e._tag.isMounted=!!e._tag.trigger("mount")})}}}else{c=e.stub=c||document.createTextNode("");if(i.parentNode)p();else(t.parent||t).one("updated",p);i.inStub=true}}else if(/^(show|hide)$/.test(u)){if(u=="hide")a=!a;i.style.display=a?"":"none"}else if(u=="value"){i.value=a}else if(J(u,r)&&u!=o){if(a)i.setAttribute(u.slice(r.length),a)}else{if(e.bool){i[u]=a;if(!a)return}if(typeof a!==f)i.setAttribute(u,a)}})}function C(e,t){for(var n=0,i=(e||[]).length,r;n<i;n++){r=e[n];if(r!=null&&t(r,n)===false)n--}return e}function M(e){return typeof e===s||false}function A(e,t){e.removeAttribute(t)}function O(e){return e.tagName&&U[e.getAttribute(o)||e.tagName.toLowerCase()]}function E(e,t,n){var i=new _(e,{root:t,parent:n},t.innerHTML),r=S(t),o=H(n),u;i.parent=o;u=o.tags[r];if(u){if(!d(u))o.tags[r]=[u];if(!~o.tags[r].indexOf(i))o.tags[r].push(i)}else{o.tags[r]=i}t.innerHTML="";return i}function H(e){var t=e;while(!O(t.root)){if(!t.parent)break;t=t.parent}return t}function S(e){var t=O(e),n=e.getAttribute("name"),i=n&&n.indexOf(g(0))<0?n:t?t.name:e.tagName.toLowerCase();return i}function k(e){var t,n=arguments;for(var i=1;i<n.length;++i){if(t=n[i]){for(var r in t){e[r]=t[r]}}}return e}function j(e){if(!(e instanceof _)&&!(e&&typeof e.trigger==s))return e;var t={};for(var n in e){if(!~l.indexOf(n))t[n]=e[n]}return t}function F(e,t){if(e){if(t(e)===false)return;else{e=e.firstChild;while(e){F(e,t);e=e.nextSibling}}}}function $(e,t){var n,i=/([-\w]+) ?= ?(?:"([^"]*)|'([^']*)|({[^}]*}))/g;while(n=i.exec(e)){t(n[1].toLowerCase(),n[2]||n[3]||n[4])}}function B(e){while(e){if(e.inStub)return true;e=e.parentNode}return false}function R(e){return document.createElement(e)}function D(e,t){return e.replace(/<(yield)\/?>(<\/\1>)?/gi,t||"")}function I(e,t){return(t||document).querySelectorAll(e)}function V(e,t){return(t||document).querySelector(e)}function q(e){function t(){}t.prototype=e;return new t}function z(e,t,n){if(e._visited)return;var i,r=e.getAttribute("id")||e.getAttribute("name");if(r){if(n.indexOf(r)<0){i=t[r];if(!i)t[r]=e;else if(d(i))i.push(e);else t[r]=[i,e]}e._visited=true}}function J(e,t){return e.slice(0,t.length)===t}var P=[],U={},W;function X(e){if(n.render)return;if(!W){W=R("style");W.setAttribute("type","text/css")}var t=document.head||document.getElementsByTagName("head")[0];if(W.styleSheet)W.styleSheet.cssText+=e;else W.innerHTML+=e;if(!W._rendered)if(W.styleSheet){document.body.appendChild(W)}else{var i=V("style[type=riot]");if(i){i.parentNode.insertBefore(W,i);i.parentNode.removeChild(i)}else t.appendChild(W)}W._rendered=true}function Y(e,t,n){var i=U[t],r=e._innerHTML=e._innerHTML||e.innerHTML;e.innerHTML="";if(i&&e)i=new _(i,{root:e,opts:n},r);if(i&&i.mount){i.mount();P.push(i);return i.on("unmount",function(){P.splice(P.indexOf(i),1)})}}n.tag=function(e,t,n,i,r){if(M(i)){r=i;if(/^[\w\-]+\s?=/.test(n)){i=n;n=""}else i=""}if(n){if(M(n))r=n;else X(n)}U[e]={name:e,tmpl:t,attrs:i,fn:r};return e};n.mount=function(e,t,n){var i,r,a=[];function s(e){var t="";C(e,function(e){t+=", *["+o+'="'+e.trim()+'"]'});return t}function c(){var e=Object.keys(U);return e+s(e)}function l(e){var i;if(e.tagName){if(t&&(!(i=e.getAttribute(o))||i!=t))e.setAttribute(o,t);var r=Y(e,t||e.getAttribute(o)||e.tagName.toLowerCase(),n);if(r)a.push(r)}else if(e.length){C(e,l)}}if(typeof t===f){n=t;t=0}if(typeof e===u){if(e==="*")e=r=c();else e+=s(e.split(","));i=I(e)}else i=e;if(t==="*"){t=r||c();if(i.tagName)i=I(t,i);else{var p=[];C(i,function(e){p.push(I(t,e))});i=p}t=0}if(i.tagName)l(i);else C(i,l);return a};n.update=function(){return C(P,function(e){e.update()})};n.mountTo=n.mount;n.util={brackets:g,tmpl:m};if(typeof exports===f)module.exports=n;else if(typeof define==="function"&&define.amd)define(function(){return e.riot=n});else e.riot=n})(typeof window!="undefined"?window:void 0);
+/* Riot v2.3.18, @license MIT */
+!function(t,e){"use strict";function n(t,e,n){var r={};return r[t.key]=e,t.pos&&(r[t.pos]=n),r}function r(t,e){for(var n,r=e.length,o=t.length;r>o;)n=e[--r],e.splice(r,1),n.unmount()}function o(t,e){Object.keys(t.tags).forEach(function(n){var r=t.tags[n];M(r)?g(r,function(t){N(t,n,e)}):N(r,n,e)})}function i(t,e,n){var r,o=t._root;for(t._virts=[];o;)r=o.nextSibling,n?e.insertBefore(o,n._root):e.appendChild(o),t._virts.push(o),o=r}function u(t,e,n,r){for(var o,i=t._root,u=0;r>u;u++)o=i.nextSibling,e.insertBefore(i,n._root),i=o}function a(t,e,a){m(t,"each");var f,c=typeof y(t,"no-reorder")!==Y||m(t,"no-reorder"),l=S(t),p=Z[l]||{tmpl:t.outerHTML},d=nt.test(l),g=t.parentNode,h=document.createTextNode(""),v=w(t),b="option"===l.toLowerCase(),x=[],_=[],N="VIRTUAL"==t.tagName;a=at.loopKeys(a),g.insertBefore(h,t),e.one("before-mount",function(){t.parentNode.removeChild(t),g.stub&&(g=e.root)}).on("update",function(){var m=at(a.val,e),y=document.createDocumentFragment();M(m)||(f=m||!1,m=f?Object.keys(m).map(function(t){return n(a,t,m[t])}):[]);for(var w=0,C=m.length;C>w;w++){var L=m[w],S=c&&L instanceof Object&&!f,T=_.indexOf(L),O=~T&&S?T:w,A=x[O];L=!f&&a.key?n(a,L,w):L,!S&&!A||S&&!~T||!A?(A=new s(p,{parent:e,isLoop:!0,hasImpl:!!Z[l],root:d?g:t.cloneNode(),item:L},t.innerHTML),A.mount(),N&&(A._root=A.root.firstChild),w!=x.length&&x[w]?(N?i(A,g,x[w]):g.insertBefore(A.root,x[w].root),_.splice(w,0,L)):N?i(A,y):y.appendChild(A.root),x.splice(w,0,A),O=w):A.update(L,!0),O!==w&&S&&x[w]&&(N?u(A,g,x[w],t.childNodes.length):g.insertBefore(A.root,x[w].root),a.pos&&(A[a.pos]=w),x.splice(w,0,x.splice(O,1)[0]),_.splice(w,0,_.splice(O,1)[0]),!v&&A.tags&&o(A,w)),A._item=L,E(A,"_parent",e)}if(r(m,x),b){if(g.appendChild(y),it&&!g.multiple)for(var j=0;j<g.length;j++)if(g[j].__riot1374){g.selectedIndex=j,delete g[j].__riot1374;break}}else g.insertBefore(y,h);v&&(e.tags[l]=x),_=m.slice()})}function f(t,e,n,r){R(t,function(t){if(1==t.nodeType){if(t.isLoop=t.isLoop||t.parentNode&&t.parentNode.isLoop||y(t,"each")?1:0,n){var o=w(t);o&&!t.isLoop&&n.push(C(o,{root:t,parent:e},t.innerHTML,e))}t.isLoop&&!r||K(t,e,[])}})}function c(t,e,n){function r(t,e,r){at.hasExpr(e)&&n.push(T({dom:t,expr:e},r))}R(t,function(t){var n,o=t.nodeType;return 3==o&&"STYLE"!=t.parentNode.tagName&&r(t,t.nodeValue),1==o?(n=y(t,"each"))?(a(t,e,n),!1):(g(t.attributes,function(e){var n=e.name,o=n.split("__")[1];return r(t,e.value,{attr:o||n,bool:o}),o?(m(t,n),!1):void 0}),w(t)?!1:void 0):void 0})}function s(t,n,r){function o(){var t=N&&_?p:w||p;g(k.attributes,function(e){var n=e.value;y[b(e.name)]=at.hasExpr(n)?at(n,t):n}),g(Object.keys(F),function(e){y[b(e)]=at(F[e],t)})}function i(t){for(var e in C)typeof p[e]!==tt&&A(p,e)&&(p[e]=t[e])}function u(){p.parent&&_&&g(Object.keys(p.parent),function(t){var e=!O(rt,t)&&O(B,t);(typeof p[t]===tt||e)&&(e||B.push(t),p[t]=p.parent[t])})}function a(t){p.update(t,!0)}function s(t){if(g(R,function(e){e[t?"mount":"unmount"]()}),w){var e=t?"on":"off";_?w[e]("unmount",p.unmount):w[e]("update",a)[e]("unmount",p.unmount)}}var l,p=V.observable(this),y=P(n.opts)||{},w=n.parent,_=n.isLoop,N=n.hasImpl,C=j(n.item),S=[],R=[],k=n.root,H=k.tagName.toLowerCase(),F={},B=[];t.name&&k._tag&&k._tag.unmount(!0),this.isMounted=!1,k.isLoop=_,k._tag=this,E(this,"_riot_id",++z),T(this,{parent:w,root:k,opts:y,tags:{}},C),g(k.attributes,function(t){var e=t.value;at.hasExpr(e)&&(F[t.name]=e)}),l=ft(t.tmpl,r),E(this,"update",function(t,e){return t=j(t),u(),t&&v(C)&&(i(t),C=t),T(p,t),o(),p.trigger("update",t),d(S,p),e&&p.parent?p.parent.one("updated",function(){p.trigger("updated")}):st(function(){p.trigger("updated")}),this}),E(this,"mixin",function(){return g(arguments,function(t){var e;t=typeof t===Y?V.mixin(t):t,h(t)?(e=new t,t=t.prototype):e=t,g(Object.getOwnPropertyNames(t),function(t){"init"!=t&&(p[t]=h(e[t])?e[t].bind(p):e[t])}),e.init&&e.init.bind(p)()}),this}),E(this,"mount",function(){o();var e=V.mixin(Q);if(e&&p.mixin(e),t.fn&&t.fn.call(p,y),c(l,p,S),s(!0),t.attrs&&$(t.attrs,function(t,e){x(k,t,e)}),(t.attrs||N)&&c(p.root,p,S),p.parent&&!_||p.update(C),p.trigger("before-mount"),_&&!N)k=l.firstChild;else{for(;l.firstChild;)k.appendChild(l.firstChild);k.stub&&(k=w.root)}E(p,"root",k),_&&f(p.root,p.parent,null,!0),!p.parent||p.parent.isMounted?(p.isMounted=!0,p.trigger("mount")):p.parent.one("mount",function(){I(p.root)||(p.parent.isMounted=p.isMounted=!0,p.trigger("mount"))})}),E(this,"unmount",function(t){var n,r=k,o=r.parentNode,i=U.indexOf(p);if(p.trigger("before-unmount"),~i&&U.splice(i,1),o){if(w)n=L(w),M(n.tags[H])?g(n.tags[H],function(t,e){t._riot_id==p._riot_id&&n.tags[H].splice(e,1)}):n.tags[H]=e;else for(;r.firstChild;)r.removeChild(r.firstChild);t?(m(o,X),m(o,W)):o.removeChild(r)}this._virts&&g(this._virts,function(t){t.parentNode&&t.parentNode.removeChild(t)}),p.trigger("unmount"),s(),p.off("*"),p.isMounted=!1,delete k._tag}),f(l,this,R)}function l(e,n,r,o){r[e]=function(e){var i,u=o._parent,a=o._item;if(!a)for(;u&&!a;)a=u._item,u=u._parent;e=e||t.event,A(e,"currentTarget")&&(e.currentTarget=r),A(e,"target")&&(e.target=e.srcElement),A(e,"which")&&(e.which=e.charCode||e.keyCode),e.item=a,n.call(o,e)===!0||/radio|check/.test(r.type)||(e.preventDefault&&e.preventDefault(),e.returnValue=!1),e.preventUpdate||(i=a?L(u):o,i.update())}}function p(t,e,n){t&&(t.insertBefore(n,e),t.removeChild(e))}function d(t,e){g(t,function(t,n){var r=t.dom,o=t.attr,i=at(t.expr,e),u=t.dom.parentNode;if(t.bool?i=!!i:null==i&&(i=""),t.value!==i){if(t.value=i,!o)return i+="",void(u&&("TEXTAREA"===u.tagName?(u.value=i,ot||(r.nodeValue=i)):r.nodeValue=i));if("value"===o)return void(r.value=i);if(m(r,o),h(i))l(o,i,r,e);else if("if"==o){var a=t.stub,f=function(){p(a.parentNode,a,r)},c=function(){p(r.parentNode,r,a)};i?a&&(f(),r.inStub=!1,I(r)||R(r,function(t){t._tag&&!t._tag.isMounted&&(t._tag.isMounted=!!t._tag.trigger("mount"))})):(a=t.stub=a||document.createTextNode(""),r.parentNode?c():(e.parent||e).one("updated",c),r.inStub=!0)}else"show"===o?r.style.display=i?"":"none":"hide"===o?r.style.display=i?"none":"":t.bool?(r[o]=i,i&&x(r,o,o),it&&"selected"===o&&"OPTION"===r.tagName&&(r.__riot1374=i)):(0===i||i&&typeof i!==J)&&(D(o,G)&&o!=W&&(o=o.slice(G.length)),x(r,o,i))}})}function g(t,e){for(var n,r=t?t.length:0,o=0;r>o;o++)n=t[o],null!=n&&e(n,o)===!1&&o--;return t}function h(t){return typeof t===et||!1}function v(t){return t&&typeof t===J}function m(t,e){t.removeAttribute(e)}function b(t){return t.replace(/-(\w)/g,function(t,e){return e.toUpperCase()})}function y(t,e){return t.getAttribute(e)}function x(t,e,n){t.setAttribute(e,n)}function w(t){return t.tagName&&Z[y(t,X)||y(t,W)||t.tagName.toLowerCase()]}function _(t,e,n){var r=n.tags[e];r?(M(r)||r!==t&&(n.tags[e]=[r]),O(n.tags[e],t)||n.tags[e].push(t)):n.tags[e]=t}function N(t,e,n){var r,o=t.parent;o&&(r=o.tags[e],M(r)?r.splice(n,0,r.splice(r.indexOf(t),1)[0]):_(t,e,o))}function C(t,e,n,r){var o=new s(t,e,n),i=S(e.root),u=L(r);return o.parent=u,o._parent=r,_(o,i,u),u!==r&&_(o,i,r),e.root.innerHTML="",o}function L(t){for(var e=t;!w(e.root)&&e.parent;)e=e.parent;return e}function E(t,e,n,r){return Object.defineProperty(t,e,T({value:n,enumerable:!1,writable:!1,configurable:!0},r)),t}function S(t){var e=w(t),n=y(t,"name"),r=n&&!at.hasExpr(n)?n:e?e.name:t.tagName.toLowerCase();return r}function T(t){for(var e,n=arguments,r=1;r<n.length;++r)if(e=n[r])for(var o in e)A(t,o)&&(t[o]=e[o]);return t}function O(t,e){return~t.indexOf(e)}function M(t){return Array.isArray(t)||t instanceof Array}function A(t,e){var n=Object.getOwnPropertyDescriptor(t,e);return typeof t[e]===tt||n&&n.writable}function j(t){if(!(t instanceof s||t&&typeof t.trigger==et))return t;var e={};for(var n in t)O(rt,n)||(e[n]=t[n]);return e}function R(t,e){if(t){if(e(t)===!1)return;for(t=t.firstChild;t;)R(t,e),t=t.nextSibling}}function $(t,e){for(var n,r=/([-\w]+) ?= ?(?:"([^"]*)|'([^']*)|({[^}]*}))/g;n=r.exec(t);)e(n[1].toLowerCase(),n[2]||n[3]||n[4])}function I(t){for(;t;){if(t.inStub)return!0;t=t.parentNode}return!1}function k(t){return document.createElement(t)}function H(t,e){return(e||document).querySelectorAll(t)}function F(t,e){return(e||document).querySelector(t)}function P(t){function e(){}return e.prototype=t,new e}function B(t){return y(t,"id")||y(t,"name")}function K(t,e,n){var r,o=B(t),i=function(i){O(n,o)||(r=M(i),i?(!r||r&&!O(i,t))&&(r?i.push(t):e[o]=[i,t]):e[o]=t)};o&&(at.hasExpr(o)?e.one("mount",function(){o=B(t),i(e[o])}):i(e[o]))}function D(t,e){return t.slice(0,e.length)===e}function q(t,e,n){var r=Z[e],o=t._innerHTML=t._innerHTML||t.innerHTML;return t.innerHTML="",r&&t&&(r=new s(r,{root:t,opts:n},o)),r&&r.mount&&(r.mount(),O(U,r)||U.push(r)),r}var V={version:"v2.3.18",settings:{}},z=0,U=[],Z={},Q="__global_mixin",G="riot-",W=G+"tag",X="data-is",Y="string",J="object",tt="undefined",et="function",nt=/^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?|opt(?:ion|group))$/,rt=["_item","_id","_parent","update","root","mount","unmount","mixin","isMounted","isLoop","tags","parent","opts","trigger","on","off","one"],ot=0|(t&&t.document||{}).documentMode,it=t&&!!t.InstallTrigger;V.observable=function(t){t=t||{};var e={},n=Array.prototype.slice,r=function(t,e){t.replace(/\S+/g,e)};return Object.defineProperties(t,{on:{value:function(n,o){return"function"!=typeof o?t:(r(n,function(t,n){(e[t]=e[t]||[]).push(o),o.typed=n>0}),t)},enumerable:!1,writable:!1,configurable:!1},off:{value:function(n,o){return"*"!=n||o?r(n,function(t){if(o)for(var n,r=e[t],i=0;n=r&&r[i];++i)n==o&&r.splice(i--,1);else delete e[t]}):e={},t},enumerable:!1,writable:!1,configurable:!1},one:{value:function(e,n){function r(){t.off(e,r),n.apply(t,arguments)}return t.on(e,r)},enumerable:!1,writable:!1,configurable:!1},trigger:{value:function(o){for(var i,u=arguments.length-1,a=new Array(u),f=0;u>f;f++)a[f]=arguments[f+1];return r(o,function(r){i=n.call(e[r]||[],0);for(var o,u=0;o=i[u];++u){if(o.busy)return;o.busy=1,o.apply(t,o.typed?[r].concat(a):a),i[u]!==o&&u--,o.busy=0}e["*"]&&"*"!=r&&t.trigger.apply(t,["*",r].concat(a))}),t},enumerable:!1,writable:!1,configurable:!1}}),t},function(e){function n(t){return t.split(/[\/?#]/)}function r(t,e){var n=new RegExp("^"+e[C](/\*/g,"([^/?#]+?)")[C](/\.\./,".*")+"$"),r=t.match(n);return r?r.slice(1):void 0}function o(t,e){var n;return function(){clearTimeout(n),n=setTimeout(t,e)}}function i(t){g=o(l,1),O[_](L,g),O[_](E,g),M[_]($,p),t&&l(!0)}function u(){this.$=[],e.observable(this),k.on("stop",this.s.bind(this)),k.on("emit",this.e.bind(this))}function a(t){return t[C](/^\/|\/$/,"")}function f(t){return"string"==typeof t}function c(t){return(t||j.href)[C](y,"")}function s(t){return"#"==h[0]?(t||j.href||"").split(h)[1]||"":(j?c(t):t||"")[C](h,"")}function l(t){var e=0==P;if(!(P>=T)&&(P++,F.push(function(){var e=s();(t||e!=v)&&(k[S]("emit",e),v=e)}),e)){for(;F.length;)F[0](),F.shift();P=0}}function p(t){if(!(1!=t.which||t.metaKey||t.ctrlKey||t.shiftKey||t.defaultPrevented)){for(var e=t.target;e&&"A"!=e.nodeName;)e=e.parentNode;!e||"A"!=e.nodeName||e[N]("download")||!e[N]("href")||e.target&&"_self"!=e.target||-1==e.href.indexOf(j.href.match(y)[0])||(e.href==j.href||e.href.split("#")[0]!=j.href.split("#")[0]&&("#"==h||0===c(e.href).indexOf(h))&&d(s(e.href),e.title||M.title))&&t.preventDefault()}}function d(t,e,n){return A?(t=h+a(t),e=e||M.title,n?A.replaceState(null,e,t):A.pushState(null,e,t),M.title=e,H=!1,l(),H):k[S]("emit",s(t))}var g,h,v,m,b,y=/^.+?\/\/+[^\/]+/,x="EventListener",w="remove"+x,_="add"+x,N="hasAttribute",C="replace",L="popstate",E="hashchange",S="trigger",T=3,O="undefined"!=typeof t&&t,M="undefined"!=typeof document&&document,A=O&&history,j=O&&(A.location||O.location),R=u.prototype,$=M&&M.ontouchstart?"touchstart":"click",I=!1,k=e.observable(),H=!1,F=[],P=0;R.m=function(t,e,n){!f(t)||e&&!f(e)?e?this.r(t,e):this.r("@",t):d(t,e,n||!1)},R.s=function(){this.off("*"),this.$=[]},R.e=function(t){this.$.concat("@").some(function(e){var n=("@"==e?m:b)(a(t),a(e));return"undefined"!=typeof n?(this[S].apply(null,[e].concat(n)),H=!0):void 0},this)},R.r=function(t,e){"@"!=t&&(t="/"+a(t),this.$.push(t)),this.on(t,e)};var B=new u,K=B.m.bind(B);K.create=function(){var t=new u,e=t.m.bind(t);return e.stop=t.s.bind(t),e},K.base=function(t){h=t||"#",v=s()},K.exec=function(){l(!0)},K.parser=function(t,e){t||e||(m=n,b=r),t&&(m=t),e&&(b=e)},K.query=function(){var t={},e=j.href||v;return e[C](/[?&](.+?)=([^&]*)/g,function(e,n,r){t[n]=r}),t},K.stop=function(){I&&(O&&(O[w](L,g),O[w](E,g),M[w]($,p)),k[S]("stop"),I=!1)},K.start=function(t){I||(O&&("complete"==document.readyState?i(t):O[_]("load",function(){setTimeout(function(){i(t)},1)})),I=!0)},K.base(),K.parser(),e.route=K}(V);var ut=function(t){function e(t){return t}function n(t,e){return e||(e=m),new RegExp(t.source.replace(/{/g,e[2]).replace(/}/g,e[3]),t.global?c:"")}function r(t){if(t===g)return h;var e=t.split(" ");if(2!==e.length||/[\x00-\x1F<>a-zA-Z0-9'",;\\]/.test(t))throw new Error('Unsupported brackets "'+t+'"');return e=e.concat(t.replace(/(?=[[\]()*+?.^$|])/g,"\\").split(" ")),e[4]=n(e[1].length>1?/{[\S\s]*?}/:h[4],e),e[5]=n(t.length>3?/\\({|})/g:h[5],e),e[6]=n(h[6],e),e[7]=RegExp("\\\\("+e[3]+")|([[({])|("+e[3]+")|"+p,c),e[8]=t,e}function o(t){return t instanceof RegExp?a(t):m[t]}function i(t){(t||(t=g))!==m[8]&&(m=r(t),a=t===g?e:n,m[9]=a(h[9])),v=t}function u(t){var e;t=t||{},e=t.brackets,Object.defineProperty(t,"brackets",{set:i,get:function(){return v},enumerable:!0}),f=t,i(e)}var a,f,c="g",s=/\/\*[^*]*\*+(?:[^*\/][^*]*\*+)*\//g,l=/"[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'/g,p=l.source+"|"+/(?:\breturn\s+|(?:[$\w\)\]]|\+\+|--)\s*(\/)(?![*\/]))/.source+"|"+/\/(?=[^*\/])[^[\/\\]*(?:(?:\[(?:\\.|[^\]\\]*)*\]|\\.)[^[\/\\]*)*?(\/)[gim]*/.source,d={"(":RegExp("([()])|"+p,c),"[":RegExp("([[\\]])|"+p,c),"{":RegExp("([{}])|"+p,c)},g="{ }",h=["{","}","{","}",/{[^}]*}/,/\\([{}])/g,/\\({)|{/g,RegExp("\\\\(})|([[({])|(})|"+p,c),g,/^\s*{\^?\s*([$\w]+)(?:\s*,\s*(\S+))?\s+in\s+(\S.*)\s*}/,/(^|[^\\]){=[\S\s]*?}/],v=t,m=[];return o.split=function(t,e,n){function r(t){e||u?c.push(t&&t.replace(n[5],"$1")):c.push(t)}function o(t,e,n){var r,o=d[e];for(o.lastIndex=n,n=1;(r=o.exec(t))&&(!r[1]||(r[1]===e?++n:--n)););return n?t.length:o.lastIndex}n||(n=m);var i,u,a,f,c=[],s=n[6];for(u=a=s.lastIndex=0;i=s.exec(t);){if(f=i.index,u){if(i[2]){s.lastIndex=o(t,i[2],s.lastIndex);continue}if(!i[3])continue}i[1]||(r(t.slice(a,f)),a=s.lastIndex,s=n[6+(u^=1)],s.lastIndex=a)}return t&&a<t.length&&r(t.slice(a)),c},o.hasExpr=function(t){return m[4].test(t)},o.loopKeys=function(t){var e=t.match(m[9]);return e?{key:e[1],pos:e[2],val:m[0]+e[3].trim()+m[1]}:{val:t.trim()}},o.array=function(t){return t?r(t):m},Object.defineProperty(o,"settings",{set:u,get:function(){return f}}),o.settings="undefined"!=typeof V&&V.settings||{},o.set=i,o.R_STRINGS=l,o.R_MLCOMMS=s,o.S_QBLOCKS=p,o}(),at=function(){function e(t,e){return t?(a[t]||(a[t]=r(t))).call(e,n):t}function n(t,n){e.errorHandler&&(t.riotData={tagName:n&&n.root&&n.root.tagName,_riot_id:n&&n._riot_id},e.errorHandler(t))}function r(t){var e=o(t);return"try{return "!==e.slice(0,11)&&(e="return "+e),new Function("E",e+";")}function o(t){var e,n=[],r=ut.split(t.replace(l,'"'),1);if(r.length>2||r[0]){var o,u,a=[];for(o=u=0;o<r.length;++o)e=r[o],e&&(e=1&o?i(e,1,n):'"'+e.replace(/\\/g,"\\\\").replace(/\r\n?|\n/g,"\\n").replace(/"/g,'\\"')+'"')&&(a[u++]=e);e=2>u?a[0]:"["+a.join(",")+'].join("")'}else e=i(r[1],0,n);return n[0]&&(e=e.replace(p,function(t,e){return n[e].replace(/\r/g,"\\r").replace(/\n/g,"\\n")})),e}function i(t,e,n){function r(e,n){var r,o=1,i=d[e];for(i.lastIndex=n.lastIndex;r=i.exec(t);)if(r[0]===e)++o;else if(!--o)break;n.lastIndex=o?t.length:i.lastIndex}if(t=t.replace(s,function(t,e){return t.length>2&&!e?f+(n.push(t)-1)+"~":t}).replace(/\s+/g," ").trim().replace(/\ ?([[\({},?\.:])\ ?/g,"$1")){for(var o,i=[],a=0;t&&(o=t.match(c))&&!o.index;){var l,p,g=/,|([[{(])|$/g;for(t=RegExp.rightContext,l=o[2]?n[o[2]].slice(1,-1).trim().replace(/\s+/g," "):o[1];p=(o=g.exec(t))[1];)r(p,g);p=t.slice(0,o.index),t=RegExp.rightContext,i[a++]=u(p,1,l)}t=a?a>1?"["+i.join(",")+'].join(" ").trim()':i[0]:u(t,e)}return t}function u(t,e,n){var r;return t=t.replace(h,function(t,e,n,o,i){return n&&(o=r?0:o+t.length,"this"!==n&&"global"!==n&&"window"!==n?(t=e+'("'+n+g+n,o&&(r="."===(i=i[o])||"("===i||"["===i)):o&&(r=!v.test(i.slice(o)))),t}),r&&(t="try{return "+t+"}catch(e){E(e,this)}"),n?t=(r?"function(){"+t+"}.call(this)":"("+t+")")+'?"'+n+'":""':e&&(t="function(v){"+(r?t.replace("return ","v="):"v=("+t+")")+';return v||v===0?v:""}.call(this)'),t}var a={};e.haveRaw=ut.hasRaw,e.hasExpr=ut.hasExpr,e.loopKeys=ut.loopKeys,e.errorHandler=null;var f="⁗",c=/^(?:(-?[_A-Za-z\xA0-\xFF][-\w\xA0-\xFF]*)|\u2057(\d+)~):/,s=RegExp(ut.S_QBLOCKS,"g"),l=/\u2057/g,p=/\u2057(\d+)~/g,d={"(":/[()]/g,"[":/[[\]]/g,"{":/[{}]/g},g='"in this?this:'+("object"!=typeof t?"global":"window")+").",h=/[,{][$\w]+:|(^ *|[^$\w\.])(?!(?:typeof|true|false|null|undefined|in|instanceof|is(?:Finite|NaN)|void|NaN|new|Date|RegExp|Math)(?![$\w]))([$_A-Za-z][$\w]*)/g,v=/^(?=(\.[$\w]+))\1(?:[^.[(]|$)/;return e.parse=function(t){return t},e.version=ut.version="v2.3.22",e}(),ft=function t(){function t(t,r){var o=t&&t.match(/^\s*<([-\w]+)/),i=o&&o[1].toLowerCase(),u=k("div");return t=n(t,r),f.test(i)?u=e(u,t,i):u.innerHTML=t,u.stub=!0,u}function e(t,e,n){var r="o"===n[0],o=r?"select>":"table>";if(t.innerHTML="<"+o+e.trim()+"</"+o,o=t.firstChild,r)o.selectedIndex=-1;else{var i=a[n];i&&1===o.childElementCount&&(o=F(i,o))}return o}function n(t,e){if(!r.test(t))return t;var n={};return e=e&&e.replace(i,function(t,e,r){return n[e]=n[e]||r,""}).trim(),t.replace(u,function(t,e,r){return n[e]||r||""}).replace(o,function(t,n){return e||n||""})}var r=/<yield\b/i,o=/<yield\s*(?:\/>|>([\S\s]*?)<\/yield\s*>)/gi,i=/<yield\s+to=['"]([^'">]*)['"]\s*>([\S\s]*?)<\/yield\s*>/gi,u=/<yield\s+from=['"]?([-\w]+)['"]?\s*(?:\/>|>([\S\s]*?)<\/yield\s*>)/gi,a={tr:"tbody",th:"tr",td:"tr",col:"colgroup"},f=ot&&10>ot?nt:/^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?)$/;return t}(),ct=function(e){if(!t)return{add:function(){},inject:function(){}};var n=function(){var t=k("style");x(t,"type","text/css");var e=F("style[type=riot]");return e?(e.id&&(t.id=e.id),e.parentNode.replaceChild(t,e)):document.getElementsByTagName("head")[0].appendChild(t),t}(),r=n.styleSheet,o="";return Object.defineProperty(e,"styleNode",{value:n,writable:!0}),{add:function(t){o+=t},inject:function(){o&&(r?r.cssText+=o:n.innerHTML+=o,o="")}}}(V),st=function(t){var e=t.requestAnimationFrame||t.mozRequestAnimationFrame||t.webkitRequestAnimationFrame;if(!e||/iP(ad|hone|od).*OS 6/.test(t.navigator.userAgent)){var n=0;e=function(t){var e=Date.now(),r=Math.max(16-(e-n),0);setTimeout(function(){t(n=e+r)},r)}}return e}(t||{});V.util={brackets:ut,tmpl:at},V.mixin=function(){var t={};return function(e,n){return v(e)?(n=e,void(t[Q]=T(t[Q]||{},n))):n?void(t[e]=n):t[e]}}(),V.tag=function(t,e,n,r,o){return h(r)&&(o=r,/^[\w\-]+\s?=/.test(n)?(r=n,n=""):r=""),n&&(h(n)?o=n:ct.add(n)),t=t.toLowerCase(),Z[t]={name:t,tmpl:e,attrs:r,fn:o},t},V.tag2=function(t,e,n,r,o){return n&&ct.add(n),Z[t]={name:t,tmpl:e,attrs:r,fn:o},t},V.mount=function(t,e,n){function r(t){var e="";return g(t,function(t){/[^-\w]/.test(t)||(t=t.trim().toLowerCase(),e+=",["+X+'="'+t+'"],['+W+'="'+t+'"]')}),e}function o(){var t=Object.keys(Z);return t+r(t)}function i(t){if(t.tagName){var r=y(t,X)||y(t,W);e&&r!==e&&(r=e,x(t,X,e),x(t,W,e));var o=q(t,r||t.tagName.toLowerCase(),n);o&&f.push(o)}else t.length&&g(t,i)}var u,a,f=[];if(ct.inject(),v(e)&&(n=e,e=0),typeof t===Y?("*"===t?t=a=o():t+=r(t.split(/, */)),u=t?H(t):[]):u=t,"*"===e){if(e=a||o(),u.tagName)u=H(e,u);else{var c=[];g(u,function(t){c.push(H(e,t))}),u=c}e=0}return i(u),f},V.update=function(){return g(U,function(t){t.update()})},V.vdom=U,V.Tag=s,typeof exports===J?module.exports=V:typeof define===et&&typeof define.amd!==tt?define(function(){return V}):t.riot=V}("undefined"!=typeof window?window:void 0);
 
-riot.tag('balance-table-child', '<div class="th"> <view-edit-box surface="{ this.record.date }" > <input name="date" type="date" class="edit-input {edit-mode: this.editMode}" value="{ this.record.date }" onblur="{ editModeEnd }"> </view-edit-box> </div> <div class="td record-section"> <view-edit-box surface="{ this.record.section.surface }" > <select name="section" class="edit-input {edit-mode: this.editMode}" onblur="{ editModeEnd }"> <option each="{ parent.sections.models }" value="{ this.id }" __selected="{ this.id === this.record.section.id }"> { this.title } </option> </select> </view-edit-box> </div> <div class="td record-subsection"> <view-edit-box surface="{ this.record.subsection.surface }" > <select name="subsection" class="edit-input {edit-mode: this.editMode}" onblur="{ editModeEnd }"> <option each="{ parent.subsections.models }" value="{ this.id }" __selected="{ this.id === this.record.subsection.id }"> { this.title } </option> </select> </view-edit-box> </div> <div class="td record-amount"> <view-edit-box surface="{ this.record.amount.surface }" > <input name="amount" riot-type={"number"} class="edit-input {edit-mode: this.editMode}" value="{ this.record.amount.value }" onblur="{ editModeEnd }"> </view-edit-box> </div>', function(opts) {
+riot.tag2('balance-table-child', '<div class="th"> <view-edit-box surface="{this.record.date}"> <input name="date" class="edit-input {edit-mode: this.editMode}" value="{this.record.date}" onblur="{editModeEnd}" type="{\'date\'}"> </view-edit-box> </div> <div class="td record-section"> <view-edit-box surface="{this.record.section.surface}"> <select name="section" class="edit-input {edit-mode: this.editMode}" onblur="{editModeEnd}"> <option each="{parent.sections.models}" value="{this.id}" __selected="{this.id === this.record.section.id}"> {this.title} </option> </select> </view-edit-box> </div> <div class="td record-subsection"> <view-edit-box surface="{this.record.subsection.surface}"> <select name="subsection" class="edit-input {edit-mode: this.editMode}" onblur="{editModeEnd}"> <option each="{parent.subsections.models}" value="{this.id}" __selected="{this.id === this.record.subsection.id}"> {this.title} </option> </select> </view-edit-box> </div> <div class="td record-amount"> <view-edit-box surface="{this.record.amount.surface}"> <input name="amount" class="edit-input {edit-mode: this.editMode}" value="{this.record.amount.value}" onblur="{editModeEnd}" type="{\'number\'}"> </view-edit-box> </div>', '', '', function(opts) {
 
-      
+
         this.keypress = function(e) {
             if( e.keyCode === 13 ) {
               e.target.blur();
               this.trigger('patch', e.target.parentElement);
             }
             else return true;
-        }.bind(this);
-      
+        }.bind(this)
+
         this.submit = function(e) {
             this.parent.changedId = this.record.id;
             this.trigger('patch', e.target)
-        }.bind(this);
-        
-        this.puts = function(obj) {
-          console.log(obj);
-        }.bind(this);
+        }.bind(this)
 
-      
+        this.puts = function(obj){
+          console.log(obj);
+        }.bind(this)
+
         var self = this;
-      
+
         self.on('patch', function(form){
             var param = ajax.serialize(form);
             console.log(self.parent.parent);
             self.parent.parent.changedId = self.record.id;
             riot.collections.records.trigger('patch', self.record.id, param);
-            
+
         });
-        
+
         self.on('update', function(){
-            
+
         });
-      
+
         self.on('updated', function(){
-            
+
         });
-      
-    
+
 });
-riot.tag('balance-table', '<div class="table balance-table"> <div class="thead"> <div class="tr"> <div class="th" each="{ title, i in titles }">{ title }</div> </div> </div> <div class="tbody" each="{ record_groups }"> <balance-table-child each="{ record, i in records }" class="tr { changed: record.id === parent.changedId }"></balance-table-child> </div> <div class="tfoot"> <div class="tr"> <div class="th">total income </div> <div class="td">{ total.income }</div> </div> <div class="tr"> <div class="th">total expense </div> <div class="td">{ total.expense }</div> </div> <div class="tr"> <div class="th">total</div> <div class="td">{ total.all }</div> </div> </div> </div>', function(opts) {
-        
+riot.tag2('balance-table', '<div class="table balance-table"> <div class="thead"> <div class="tr"> <div class="th" each="{title, i in titles}">{title}</div> </div> </div> <div class="tbody" each="{record_groups}"> <balance-table-child each="{record, i in records}" class="tr {changed: record.id === parent.changedId}"></balance-table-child> </div> <div class="tfoot"> <div class="tr"> <div class="th">total income </div> <div class="td">{total.income}</div> </div> <div class="tr"> <div class="th">total expense </div> <div class="td">{total.expense}</div> </div> <div class="tr"> <div class="th">total</div> <div class="td">{total.all}</div> </div> </div> </div>', '', '', function(opts) {
+
         this.records = riot.collections.records;
         this.sections = riot.collections.sections;
         this.subsections = riot.collections.subsections;
-      
+
         this.changedId = false;
-      
+
         this.titles = ['date', 'section', 'subsection', 'amount'];
         this.record_groups = [];
         this.total = {
@@ -76,11 +74,11 @@ riot.tag('balance-table', '<div class="table balance-table"> <div class="thead">
             expense : 0,
             all : 0
         }
-        
+
         var self = this;
-        
+
         self.calculate = {
-            
+
             totals: function(){
                 var income = 0, expense = 0;
                 _.each(self.records.models, function(record_group){
@@ -94,30 +92,30 @@ riot.tag('balance-table', '<div class="table balance-table"> <div class="thead">
                 self.total.all = income - expense;
                 return self.total;
             },
-            
+
             total_income : function(){
                 this.totals();
                 return self.total.income;
             },
-            
+
             total_expense : function(){
                 this.totals();
                 return self.total.expense;
             }
         }
-      
+
         self.records.on('updated', function(){
             self.update();
         });
-        
+
         self.sections.on('updated', function(){
             self.update();
         });
-        
+
         self.subsections.on('updated', function(){
             self.update();
         });
-      
+
         self.on('update', function() {
             if(self.records.isReady() && self.sections.isReady() && self.subsections.isReady()){
                 self.record_groups = _.map(self.records.models, function(record_group){
@@ -137,47 +135,44 @@ riot.tag('balance-table', '<div class="table balance-table"> <div class="thead">
                 });
                 self.calculate.totals();
             }
-          
+
         });
-        
-    
+
 });
-riot.tag('record-edit', '<form> <div class="radio-tabs"> <label for="{ \'isIncome\' + opt.suffix }">Income</label> <input id="{ \'isIncome\' + opt.suffix }" name="is_income" type="radio" value="1" __checked="{ record.is_income }"> <label for="{ \'isExpense\' + opt.suffix }">Expense</label> <input id="{ \'isExpense\' + opt.suffix }" name="is_income" type="radio" value="0" __checked="{ !record.is_income }"> </div><div> <input name="date" type="date" class="edit-input" value="{ record.date }"> </div><div> <select name="section" class="edit-input"> <option if="{ this.id }" each="{ sections.models }" value="{ this.id }" __selected="{ this.id === parent.record.section }"> { this.title } </option> </select> </div><div> <select name="subsection" class="edit-input"> <option if="{ this.id }" each="{ subsections.models }" value="{ this.id }" __selected="{ this.id === parent.record.subsection }"> { this.title } </option> </select> </div><div> <input name="amount" riot-type={"number"} class="edit-input" value="{ record.amount }"> </div><div> <input name="detail" type="text" class="edit-input" value="{ record.detail }"> </div> </form>', function(opts) {
-        
+riot.tag2('record-edit', '<form> <div class="radio-tabs"> <label for="{\'isIncome\' + opt.suffix}">Income</label> <input id="{\'isIncome\' + opt.suffix}" name="is_income" type="radio" value="1" __checked="{record.is_income}"> <label for="{\'isExpense\' + opt.suffix}">Expense</label> <input id="{\'isExpense\' + opt.suffix}" name="is_income" type="radio" value="0" __checked="{!record.is_income}"> </div><div> <input name="date" class="edit-input" value="{record.date}" type="{\'date\'}"> </div><div> <select name="section" class="edit-input"> <option if="{this.id}" each="{sections.models}" value="{this.id}" __selected="{this.id === parent.record.section}"> {this.title} </option> </select> </div><div> <select name="subsection" class="edit-input"> <option if="{this.id}" each="{subsections.models}" value="{this.id}" __selected="{this.id === parent.record.subsection}"> {this.title} </option> </select> </div><div> <input name="amount" class="edit-input" value="{record.amount}" type="{\'number\'}"> </div><div> <input name="detail" type="text" class="edit-input" value="{record.detail}"> </div> </form>', '', '', function(opts) {
+
+
         this.records = riot.collections.records;
         this.sections = riot.collections.sections;
         this.subsections = riot.collections.subsections;
-    
+
         this.record = {
             is_income: true
         };
 
-
-              
         var self = this;
-      
+
         self.records.on('updated', function(){
             self.update();
         });
-        
+
         self.sections.on('updated', function(){
             self.update();
         });
-        
+
         self.subsections.on('updated', function(){
             self.update();
         });
-      
+
         self.on('update', function() {
             if(self.records.isReady() && self.sections.isReady() && self.subsections.isReady()){
                 self.record = this.records.models[0].records[0];
                 console.log(self.record);
             }
         });
-        
-    
+
 });
-riot.tag('tabs', '<h2>Tabs</h2> <ul> <li each="{ tab, i in tabs }" class="tabItem { is-active: parent.isActiveTab(tab.ref) }" onclick="{ parent.toggleTab }">{tab.title}</li> </ul> <div class="tabContent"> <div each="{ tab, i in tabs }" class="tabContent__item { hidden: !parent.isActiveTab(tab.ref) }">{tab.content}</div> </div>', function(opts) {
+riot.tag2('tabs', '<h2>Tabs</h2> <ul> <li each="{tab, i in tabs}" class="tabItem {is-active: parent.isActiveTab(tab.ref)}" onclick="{parent.toggleTab}">{tab.title}</li> </ul> <div class="tabContent"> <div each="{tab, i in tabs}" class="tabContent__item {hidden: !parent.isActiveTab(tab.ref)}">{tab.content}</div> </div>', '', '', function(opts) {
         this.tabs = [
             {
                 title: 'Tab 1',
@@ -200,38 +195,35 @@ riot.tag('tabs', '<h2>Tabs</h2> <ul> <li each="{ tab, i in tabs }" class="tabIte
 
         this.isActiveTab = function(tab) {
             return this.activeTab === tab
-        }.bind(this);
+        }.bind(this)
 
         this.toggleTab = function(e) {
             this.activeTab = e.item.tab.ref
             riot.event.trigger('open', 'opened');
             return true
-        }.bind(this);
-    
+        }.bind(this)
 });
-riot.tag('todo', '<h3>{ title }</h3> <ul> <li each="{ items }" class="{ hidden: hidden }"> <label class="{ completed: done }"> <input type="checkbox" __checked="{ done }" onclick="{ parent.toggle }"> { title } </label> </li> </ul> <form onsubmit="{ add }"> <input type="checkbox" __checked="{ checked }" onclick="{ check }"><input name="input" onkeyup="{ edit }"> <button __disabled="{ !text }">Add #{ items.length + 1 }</button> </form>', function(opts) {
-        
+riot.tag2('todo', '<h3>{title}</h3> <ul> <li each="{items}" class="{hidden: hidden}"> <label class="{completed: done}"> <input type="checkbox" __checked="{done}" onclick="{parent.toggle}"> {title} </label> </li> </ul> <form onsubmit="{add}"> <input type="checkbox" __checked="{checked}" onclick="{check}"><input name="input" onkeyup="{edit}"> <button __disabled="{!text}">Add #{items.length + 1}</button> </form>', '', '', function(opts) {
+
         var self = this;
-        
+
         self.disabled = true
 
         self.title = opts.title || 'TODO LISTS'
         self.items = opts.items || []
         self.checked = false
-        
-        
+
         if( opts.remote ){
           ajax.get(opts.remote, function(res){
               var tasks = JSON.parse(res);
               self.addAjax(tasks);
           });
         }
-        
 
         this.edit = function(e) {
             self.text = e.target.value
-        }.bind(this);
-        
+        }.bind(this)
+
         this.addAjax = function(tasks) {
             tasks.forEach(function(task){
                 self.items.push({
@@ -240,7 +232,7 @@ riot.tag('todo', '<h3>{ title }</h3> <ul> <li each="{ items }" class="{ hidden: 
                 });
             });
             self.update();
-        }.bind(this);
+        }.bind(this)
 
         this.add = function(e) {
             if (self.text) {
@@ -250,64 +242,51 @@ riot.tag('todo', '<h3>{ title }</h3> <ul> <li each="{ items }" class="{ hidden: 
                 })
                 self.text = self.input.value = ''
             }
-        }.bind(this);
-        
+        }.bind(this)
+
         this.check = function(e) {
             self.checked = !self.checked
             return true
-        }.bind(this);
+        }.bind(this)
 
         this.toggle = function(e) {
             var item = e.item
             item.done = !item.done
             return true
-        }.bind(this);
+        }.bind(this)
 
-
-
-
-
-
-
-
-
-
-
-    
 });
-riot.tag('user-edit', '<div class="table user-edit"> <div class="thead"> <div class="tr"> <div class="th" each="{ title, i in titles }">{ title }</div> </div> </div> <div class="tbody"> <div class="tr" each="{ this.users.models }"> <div class="td"> { this.id } </div> <div class="td"> { this.name } </div> <div class="td"> </div> <div class="td"> { this.using_books } </div> <div class="td"> </div> <div class="td"> </div> </div> </div> </div>', function(opts) {
-        
+riot.tag2('user-edit', '<div class="table user-edit"> <div class="thead"> <div class="tr"> <div class="th" each="{title, i in titles}">{title}</div> </div> </div> <div class="tbody"> <div class="tr" each="{this.users.models}"> <div class="td"> {this.id} </div> <div class="td"> {this.name} </div> <div class="td"> </div> <div class="td"> {this.using_books} </div> <div class="td"> </div> <div class="td"> </div> </div> </div> </div>', '', '', function(opts) {
+
+
         this.users = riot.collections.users;
         console.log(this.users.models);
-      
+
         this.titles = ['id', 'name', 'password', 'using books', 'using credit', 'using cards'];
 
-              
         var self = this;
-      
+
         self.users.on('updated', function(){
             self.update();
         });
 
-    
 });
 
-riot.tag('view-edit-box', '<p class="{ hidden: editMode }" onclick="{ editModeStart }">{ opts.surface }</p> <form if="{ editMode }" onsubmit="{ parent.submit }" onkeypress="{ parent.keypress }"> <yield></yield> </form>', function(opts) {
-      
+riot.tag2('view-edit-box', '<p class="{hidden: editMode}" onclick="{editModeStart}">{opts.surface}</p> <form if="{editMode}" onsubmit="{parent.submit}" onkeypress="{parent.keypress}"> <yield></yield> </form>', '', '', function(opts) {
+
         this.editMode = false;
-      
+
         this.editModeStart = function(editModeName) {
             this.editMode = true;
             this.one('updated', function(){
                 this.root.getElementsByClassName('edit-mode')[0].focus();
             });
-        }.bind(this);
-      
+        }.bind(this)
+
         this.editModeEnd = function(e) {
             this.editMode = false;
-        }.bind(this);
-  
-    
+        }.bind(this)
+
 });
 (function(){
     var isReady = false,

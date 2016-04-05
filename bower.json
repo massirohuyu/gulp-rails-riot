@@ -16,6 +16,6 @@
   "dependencies": {
     "underscore": "~1.8.3",
     "lodash": "~3.10.1",
-    "riot": "~2.2.4"
+    "riot": "~2.3.18"
   }
 }

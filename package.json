@@ -32,6 +32,6 @@
     "merge-stream": "^1.0.0",
     "node-bourbon": "^4.2.2",
     "node-neat": "^1.7.1-beta1",
-    "riot": "^2.2.4"
+    "riot": "^2.3.18"
   }
 }

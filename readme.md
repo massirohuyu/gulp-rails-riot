@@ -1,5 +1,6 @@
 # gulp-rails-riot
 
+````
 > npm install
 > bower install
 > gulp
@@ -9,7 +10,7 @@
 > bundle exec rake:migrate
 > bundle exec rake:seed
 > bundle exec rails s
-
+````
 
 
 ## 使用予定ツール・プラグインメモ（バックもフロントもごちゃまぜ）
